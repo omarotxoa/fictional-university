@@ -13,11 +13,17 @@
     </div>
 
     <div class="container container--narrow page-section">
-        <div class="metabox metabox--position-up metabox--with-home-link">
-        <p>
-            <a class="metabox__blog-home-link" href="#"><i class="fa fa-home" aria-hidden="true"></i> Back to About Us</a> <span class="metabox__main">Our History</span>
-        </p>
-        </div>
+
+        <?php $parentID = wp_get_post_parent_id(); ?>
+
+        <?php if($parentID != 0) { ?>
+                <div class="metabox metabox--position-up metabox--with-home-link">
+                <p>
+                    <a class="metabox__blog-home-link" href="<?php echo get_permalink($parentID); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($parentID); ?></a> <span class="metabox__main"><?php the_title(); ?></span>
+                </p>
+                </div>
+        <?php } ?>
+            
 
         <!-- <div class="page-links">
         <h2 class="page-links__title"><a href="#">About Us</a></h2>
