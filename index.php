@@ -23,6 +23,8 @@
       </div>
     </div>
   <?php endwhile; endif; ?>
+  <?php echo paginate_links(); ?>
+  
 </div>
 
 <?php get_footer(); ?>
