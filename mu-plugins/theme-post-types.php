@@ -10,7 +10,8 @@ function theme_post_types() {
       'all_items' => 'All Events',
       'singular_name' => 'Event'
     ),
-    'menu_icon' => 'dashicons-calendar-alt'
+    'menu_icon' => 'dashicons-calendar-alt',
+    'has_archive' => true
   ));
 }
 add_action('init', 'theme_post_types');
