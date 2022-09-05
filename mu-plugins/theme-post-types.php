@@ -12,7 +12,8 @@ function theme_post_types() {
       'singular_name' => 'Event'
     ),
     'menu_icon' => 'dashicons-calendar-alt',
-    'has_archive' => true
+    'has_archive' => true,
+    'supports' => array('title', 'editor', 'excerpt')
   ));
 }
 add_action('init', 'theme_post_types');
