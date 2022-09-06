@@ -24,8 +24,15 @@
       This if check makes sure that the code only applies to the MAIN QUERY on the FRONTEND in the EVENT custom post type.
       The main WP_Query applies to the WHOLE website, even the admin section. So it is important to apply appropriate restrictions. 
     */
-    $today = date('Ymd');
-    if($query->is_main_query() && !is_admin() && is_post_type_archive('event')) {
+
+    if(is_main_query() && !is_admin() && is_post_type_archive('program')) {
+      $query->set('orderby', 'title');
+      $query->set('order', 'ASC');
+      $query->set('posts_per_page', '-1');
+    }
+
+    if(is_main_query() && !is_admin() && is_post_type_archive('event')) {
+      $today = date('Ymd');
       $query->set('meta_key', 'event_date');
       $query->set('orderby', 'meta_value');
       $query->set('order', 'ASC');
