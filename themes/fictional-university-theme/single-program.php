@@ -43,9 +43,16 @@
   <?php if($professors->have_posts()) {?>
     <hr class="section-break">
     <h2 class="headline headline--medium"><?php get_the_title(); ?> Professors</h2>
-    <?php if ($professors->have_posts()) : while ($professors->have_posts()) : $professors->the_post(); ?>
-      <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-    <?php endwhile; endif; wp_reset_postdata(); ?>
+    <ul class="professor-cards">
+      <?php if ($professors->have_posts()) : while ($professors->have_posts()) : $professors->the_post(); ?>
+        <li class="professor-card__list-item">
+          <a class="professor-card" href="<?php the_permalink(); ?>">
+            <img class="professor-card__image" src="<?php the_post_thumbnail_url(); ?>" alt="">
+            <span class="professor-card__name"><?php the_title(); ?></span>
+          </a>
+        </li>
+      <?php endwhile; endif; wp_reset_postdata(); ?>
+    </ul>
   <?php } ?>
 
 
