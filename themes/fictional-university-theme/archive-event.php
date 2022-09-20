@@ -1,6 +1,9 @@
 <?php get_header(); ?>
 
-<?php page_banner(); ?>
+<?php page_banner(array(
+  'title' => 'All Events',
+  'subtitle' => 'See what is going on in our world.'
+)); ?>
 
 <div class="container container--narrow page-section">
   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
