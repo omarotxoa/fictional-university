@@ -3901,7 +3901,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const mobileMenu = new _modules_MobileMenu__WEBPACK_IMPORTED_MODULE_1__["default"]();
 const heroSlider = new _modules_HeroSlider__WEBPACK_IMPORTED_MODULE_2__["default"]();
-const liveSearch = new _modules_Search__WEBPACK_IMPORTED_MODULE_3__["default"]();
+const liveSearch = new _modules_Search__WEBPACK_IMPORTED_MODULE_3__["default"](); // const openSearch = document.querySelector(".fa-search");
+// const searchOverlay = document.querySelector(".search-overlay");
+// console.log(openSearch);
+// document.addEventListener('click', function(e){
+//   searchOverlay.classList.add("search-overlay--active");
+//   console.log(e.target);
+// });
 
 /***/ }),
 
@@ -3986,7 +3992,7 @@ class Search {
   // 1. describe and create/initiate our object
   constructor() {
     this.resultsDiv = document.querySelector("#search-overlay__results");
-    this.openButton = document.querySelector(".js-search-trigger").parentElement;
+    this.openButton = document.querySelectorAll(".fa-search");
     this.closeButton = document.querySelector(".search-overlay__close");
     this.searchOverlay = document.querySelector(".search-overlay");
     this.searchField = document.querySelector('#search-term');
@@ -3999,8 +4005,10 @@ class Search {
 
 
   events() {
-    this.openButton.addEventListener('click', () => this.openOverlay());
-    this.closeButton.addEventListener('click', () => this.closeOverlay());
+    this.openButton.forEach(button => {
+      button.addEventListener("click", () => this.openOverlay());
+    });
+    this.closeButton.addEventListener("click", () => this.closeOverlay());
     this.searchField.addEventListener("keyup", this.typingLogic.bind(this));
     document.body.addEventListener('keydown', this.keyPressDispatcher.bind(this));
   } // 3. methods (function, action...)

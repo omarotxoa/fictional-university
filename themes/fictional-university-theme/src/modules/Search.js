@@ -2,7 +2,7 @@ class Search {
   // 1. describe and create/initiate our object
   constructor() {
     this.resultsDiv = document.querySelector("#search-overlay__results");
-    this.openButton = document.querySelector(".js-search-trigger").parentElement;
+    this.openButton = document.querySelectorAll(".fa-search");
     this.closeButton = document.querySelector(".search-overlay__close");
     this.searchOverlay = document.querySelector(".search-overlay");
     this.searchField = document.querySelector('#search-term');
@@ -15,8 +15,10 @@ class Search {
 
   // 2. events
   events() {
-    this.openButton.addEventListener('click', () => this.openOverlay());
-    this.closeButton.addEventListener('click', () => this.closeOverlay());
+    this.openButton.forEach((button) => {
+      button.addEventListener("click", () => this.openOverlay());
+    });
+    this.closeButton.addEventListener("click", () => this.closeOverlay());
     this.searchField.addEventListener("keyup", this.typingLogic.bind(this));
     document.body.addEventListener('keydown', this.keyPressDispatcher.bind(this));
   }

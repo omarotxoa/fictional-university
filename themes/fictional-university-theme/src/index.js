@@ -9,3 +9,14 @@ import Search from "./modules/Search"
 const mobileMenu = new MobileMenu()
 const heroSlider = new HeroSlider()
 const liveSearch = new Search()
+
+
+// const openSearch = document.querySelector(".fa-search");
+// const searchOverlay = document.querySelector(".search-overlay");
+
+// console.log(openSearch);
+
+// document.addEventListener('click', function(e){
+//   searchOverlay.classList.add("search-overlay--active");
+//   console.log(e.target);
+// });
