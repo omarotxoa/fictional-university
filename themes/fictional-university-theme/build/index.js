@@ -3985,11 +3985,14 @@ __webpack_require__.r(__webpack_exports__);
 class Search {
   // 1. describe and create/initiate our object
   constructor() {
-    this.openButton = document.querySelector(".js-search-trigger");
+    this.resultsDiv = document.querySelector("#search-overlay__results");
+    this.openButton = document.querySelector(".js-search-trigger").parentElement;
     this.closeButton = document.querySelector(".search-overlay__close");
     this.searchOverlay = document.querySelector(".search-overlay");
     this.searchField = document.querySelector('#search-term');
     this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.typingTimer;
     this.events();
   } // 2. events
 
@@ -4031,7 +4034,19 @@ class Search {
   }
 
   typingLogic() {
-    console.log("typing in search field");
+    clearTimeout(this.typingTimer);
+
+    if (!this.isSpinnerVisible) {
+      this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
+      this.isSpinnerVisible = true;
+    }
+
+    this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+  }
+
+  getResults() {
+    this.resultsDiv.innerHTML = "Imagine real search results here";
+    this.isSpinnerVisible = false;
   }
 
 }
