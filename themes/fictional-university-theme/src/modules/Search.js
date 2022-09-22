@@ -8,6 +8,7 @@ class Search {
     this.searchField = document.querySelector('#search-term');
     this.isOverlayOpen = false;
     this.isSpinnerVisible = false;
+    this.previousValue;
     this.typingTimer;
     this.events();
   }
@@ -16,7 +17,7 @@ class Search {
   events() {
     this.openButton.addEventListener('click', () => this.openOverlay());
     this.closeButton.addEventListener('click', () => this.closeOverlay());
-    this.searchField.addEventListener("keydown", this.typingLogic.bind(this));
+    this.searchField.addEventListener("keyup", this.typingLogic.bind(this));
     document.body.addEventListener('keydown', this.keyPressDispatcher.bind(this));
   }
 
@@ -49,12 +50,15 @@ class Search {
   }
 
   typingLogic() {
-    clearTimeout(this.typingTimer);
-    if(!this.isSpinnerVisible) {
-      this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
-      this.isSpinnerVisible = true;
+    if(this.searchField.value != this.previousValue) {
+      clearTimeout(this.typingTimer);
+      if(!this.isSpinnerVisible) {
+        this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
+        this.isSpinnerVisible = true;
+      }
+      this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
     }
-    this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+    this.previousValue = this.searchField.value;
   }
 
   getResults() {
