@@ -52,11 +52,16 @@ class Search {
   typingLogic() {
     if(this.searchField.value != this.previousValue) {
       clearTimeout(this.typingTimer);
-      if(!this.isSpinnerVisible) {
-        this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
-        this.isSpinnerVisible = true;
+      if (this.searchField.value != '') {
+        if(!this.isSpinnerVisible) {
+          this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
+          this.isSpinnerVisible = true;
+        }
+        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+      } else {
+        this.resultsDiv.innerHTML = '';
+        this.isSpinnerVisible = false;
       }
-      this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
     }
     this.previousValue = this.searchField.value;
   }
