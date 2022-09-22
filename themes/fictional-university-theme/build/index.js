@@ -4022,8 +4022,12 @@ class Search {
     /* Check for Key code
     console.log(e.keyCode); */
 
-    /* 83 is S key */
-    if (e.keyCode == 83 && !this.isOverlayOpen) {
+    /* Used to check if user is typing into an input/textarea */
+    let activeInput = document.querySelector('input');
+    let activeTextarea = document.querySelector('textarea');
+    /* 83 = S Key. Checks that user is not typing in an input to fire off the keybind */
+
+    if (e.keyCode == 83 && !this.isOverlayOpen && activeInput != document.activeElement && activeTextarea != document.activeElement) {
       this.openOverlay();
     }
     /* 27 is ESC key */

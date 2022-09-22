@@ -68,6 +68,9 @@
         </div>
       </div>
     </footer>
+    <div style="background-color: red;">
+      <input type="text">
+    </div>
     <div class="search-overlay">
       <div class="search-overlay__top">
         <div class="container">
@@ -79,7 +82,6 @@
           <div id="search-overlay__results"></div>
         </div>
       </div>
-
     </div>
     <?php wp_footer(); ?>
   </body>
