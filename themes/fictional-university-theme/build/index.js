@@ -4000,10 +4000,12 @@ class Search {
 
   openOverlay() {
     this.searchOverlay.classList.add("search-overlay--active");
+    document.querySelector("body").classList.add("body-no-scroll");
   }
 
   closeOverlay() {
     this.searchOverlay.classList.remove("search-overlay--active");
+    document.querySelector("body").classList.remove("body-no-scroll");
   }
 
 }
