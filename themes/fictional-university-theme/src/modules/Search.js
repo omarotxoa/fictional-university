@@ -65,7 +65,7 @@ class Search {
           this.resultsDiv.innerHTML = '<div class="spinner-loader"></div>';
           this.isSpinnerVisible = true;
         }
-        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+        this.typingTimer = setTimeout(this.getResults.bind(this), 500);
       } else {
         this.resultsDiv.innerHTML = '';
         this.isSpinnerVisible = false;
@@ -75,11 +75,15 @@ class Search {
   }
 
   getResults() {
-    $.getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search' + this.searchField.value, function(posts){
-      alert(posts[0].title.rendered);
+    const resultsDiv = document.querySelector("#search-overlay__results");
+    $.getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search=' + this.searchField.value, function(posts){
+      resultsDiv.innerHTML = `
+        <h2 class="search-overlay__section-title">General Information</h2>
+        <ul class="link-list min-list">
+          ${posts.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+        </ul>
+      `;
     });
-    // this.resultsDiv.innerHTML = "Imagine real search results here";
-    // this.isSpinnerVisible = false;
   }
 }
 
