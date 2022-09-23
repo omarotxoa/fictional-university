@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class Search {
   // 1. describe and create/initiate our object
   constructor() {
@@ -73,8 +75,11 @@ class Search {
   }
 
   getResults() {
-    this.resultsDiv.innerHTML = "Imagine real search results here";
-    this.isSpinnerVisible = false;
+    $.getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search' + this.searchField.value, function(posts){
+      alert(posts[0].title.rendered);
+    });
+    // this.resultsDiv.innerHTML = "Imagine real search results here";
+    // this.isSpinnerVisible = false;
   }
 }
 
