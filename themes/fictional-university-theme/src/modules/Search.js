@@ -76,9 +76,12 @@ class Search {
 
   getResults() {
     const resultsDiv = document.querySelector("#search-overlay__results");
-    $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.value, posts => {
-      $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.value, pages => {
-        let combinedResults = posts.concat(pages);
+
+    $.when(
+      $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.value), 
+      $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.value)
+      ).then((posts, pages) => {
+        let combinedResults = posts[0].concat(pages[0]);
         resultsDiv.innerHTML = `
           <h2 class="search-overlay__section-title">General Information</h2>
           ${combinedResults.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search'}
@@ -87,7 +90,6 @@ class Search {
         `;
         this.isSpinnerVisible = false;
       });
-    });
   }
 }
 
