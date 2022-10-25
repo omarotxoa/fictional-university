@@ -2,6 +2,8 @@
 function theme_post_types() {
 
   register_post_type('event', array(
+    'capability_type' => 'event',
+    'map_meta_cap' => true,
     'rewrite' => array('slug' => 'events'),
     'public' => true,
     'show_in_rest' => true,
