@@ -97,4 +97,25 @@
     }
   }
   add_action('pre_get_posts', 'wp_query_adjustments');
+
+  // Redirect subscriber accounts out of admin and onto homepage
+  add_action('admin_init', 'redirectSubsToFrontend');
+
+  function redirectSubsToFrontend() {
+    $currentUser = wp_get_current_user();
+    if(count($currentUser->roles) == 1 AND $currentUser->roles[0] == 'Subscriber') {
+      wp_redirect(site_url('/'));
+      exit;
+    }
+  }
+
+  // Hides Admin Bar for logged in subscribers
+  add_action('wp_loaded', 'noSubsAdminBar');
+
+  function noSubsAdminBar() {
+    $currentUser = wp_get_current_user();
+    if(count($currentUser->roles) == 1 AND $currentUser->roles[0] == 'Subscriber') {
+      show_admin_bar(false);
+    }
+  }
 ?>
