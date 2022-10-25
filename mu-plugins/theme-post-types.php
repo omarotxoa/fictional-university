@@ -30,7 +30,7 @@ function theme_post_types() {
     ),
     'menu_icon' => 'dashicons-awards',
     'has_archive' => true,
-    'supports' => array('title', 'editor')
+    'supports' => array('title')
   ));
 
   register_post_type('professor', array(
