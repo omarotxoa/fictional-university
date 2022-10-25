@@ -4107,7 +4107,25 @@ class Search {
             ${results.campuses.length ? '<ul class="link-list min-list">' : `<p>No Campuses match that search. <a href="${universityData.root_url}/campuses">View all Campuses</a>`}
             ${results.campuses.map(item => `<li><a href="${item.permalink}">${item.title}</a> ${item.postType == 'post' ? `by ${item.authorName}` : ''}</li>`).join('')}
             ${results.campuses.length ? '</ul>' : '</p>'}
+
             <h2 class="search-overlay__section-title">Events</h2>
+            ${results.events.length ? '' : `<p>No Events match that search. <a href="${universityData.root_url}/events">View all Events</a>`}
+            ${results.events.map(item => `
+              <div class="event-summary">
+                <a class="event-summary__date t-center" href="${item.permalink}">
+                  <span class="event-summary__month">${item.month}</span>
+                  <span class="event-summary__day">${item.day}</span>
+                </a>
+                <div class="event-summary__content">
+                  <h5 class="event-summary__title headline headline--tiny"><a href="${item.permalink}">${item.title}</a></h5>
+                  <p>
+                    ${item.description}
+                    <a href="${item.permalink}" class="nu gray">Learn more</a>
+                  </p>
+                </div>
+              </div>
+            `).join('')}
+            
           </div>
         </div>`;
       this.isSpinnerVisible = false;
