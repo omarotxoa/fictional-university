@@ -118,4 +118,26 @@
       show_admin_bar(false);
     }
   }
+
+  // Customize Login Screen
+  // Changes the Wordpress logo url to our own url
+  add_filter('login_headerurl', 'ourHeaderUrl');
+  function ourHeaderURL() {
+    return site_url('/');
+  }
+
+  // Adds CSS files for login screen (just copied from enqueued scripts above)
+  add_action('login_enqueue_scripts', 'ourLoginCSS');
+  function ourLoginCSS() {
+    wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+    wp_enqueue_style('theme_styles', get_theme_file_uri('/build/style-index.css'));
+    wp_enqueue_style('theme_extra_styles', get_theme_file_uri('/build/index.css'));
+  }
+
+  // Replaces "Powered by Wordpress" text with the site name
+  add_filter('login_headertitle', 'ourLoginTitle');
+  function ourLoginTitle() {
+    return get_bloginfo('name');
+  }
 ?>
