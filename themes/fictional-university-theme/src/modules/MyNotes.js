@@ -5,9 +5,9 @@ class MyNotes {
     this.events();
   }
   events() {
-    $(".delete-note").on("click", this.deleteNote);
-    $(".edit-note").on("click", this.editNote.bind(this));
-    $(".update-note").on("click", this.updateNote.bind(this));
+    $("#my-notes").on("click", ".delete-note", this.deleteNote);
+    $("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    $("#my-notes").on("click", "update-note", this.updateNote.bind(this));
     $(".submit-note").on("click", this.createNote.bind(this));
   }
 
@@ -54,7 +54,7 @@ class MyNotes {
       data: ourUpdatedPostData,
       success: (response) => {
         this.makeNoteReadOnly(thisNote);
-        console.log("Congrats, success!");
+        console.log("Congrats, update success!");
         console.log(response);
       },
       error: (response) => {
@@ -79,7 +79,15 @@ class MyNotes {
       data: newPostData,
       success: (response) => {
         $(".new-note-title, .new-note-body").val('');
-        $('<li>real data here</li>').prependTo("#my-notes").hide().slideDown();
+        $(`
+          <li data-id="${response.id}">
+            <input readonly class="note-title-field" value="${response.title.raw}">
+            <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true">Edit</i></span>
+            <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true">Delete</i></span>
+            <textarea readonly class="note-body-field">${response.content.raw}</textarea>
+            <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true">Save</i></span>
+          </li>
+        `).prependTo("#my-notes").hide().slideDown();
         console.log("Congrats, success!");
         console.log(response);
       },
