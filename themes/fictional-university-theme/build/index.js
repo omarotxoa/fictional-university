@@ -4014,6 +4014,7 @@ class MyNotes {
       url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
       type: 'DELETE',
       success: response => {
+        thisNote.slideUp();
         console.log("Congrats, success!");
         console.log(response);
       },
