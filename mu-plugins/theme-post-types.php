@@ -48,6 +48,21 @@ function theme_post_types() {
     'menu_icon' => 'dashicons-welcome-learn-more',
     'supports' => array('title', 'editor', 'thumbnail')
   ));
+
+  register_post_type('note', array(
+    'public' => false,
+    'show_ui' => true,
+    'show_in_rest' => true,
+    'labels' => array(
+      'name' => 'Notes',
+      'add_new_item' => 'Add New Note',
+      'edit_item' => 'Edit Note',
+      'all_items' => 'All Professors',
+      'singular_name' => 'Note'
+    ),
+    'menu_icon' => 'dashicons-welcome-write-blog',
+    'supports' => array('title', 'editor')
+  ));
 }
 add_action('init', 'theme_post_types');
 ?>
