@@ -59,7 +59,7 @@ function theme_post_types() {
       'name' => 'Notes',
       'add_new_item' => 'Add New Note',
       'edit_item' => 'Edit Note',
-      'all_items' => 'All Professors',
+      'all_items' => 'All Notes',
       'singular_name' => 'Note'
     ),
     'menu_icon' => 'dashicons-welcome-write-blog',
