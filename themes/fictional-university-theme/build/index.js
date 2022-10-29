@@ -3991,134 +3991,148 @@ class MobileMenu {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-
-
+// import axios from "axios"
 class MyNotes {
   constructor() {
+    this.myNotes = document.querySelector("#my-notes");
     this.events();
   }
 
   events() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".delete-note", this.deleteNote);
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#my-notes").on("click", "update-note", this.updateNote.bind(this));
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".submit-note").on("click", this.createNote.bind(this));
-  } // Methods
+    this.myNotes.addEventListener("click", e => this.clickHandler(e));
+    document.querySelector(".submit-note").addEventListener("click", () => this.createNote());
+  }
 
+  clickHandler(e) {
+    console.log(e.target);
+    if (e.target.classList.contains("delete-note") || e.target.classList.contains("fa-trash-o")) this.deleteNote(e);
+    if (e.target.classList.contains("edit-note") || e.target.classList.contains("fa-pencil") || e.target.classList.contains("fa-times")) this.editNote(e);
+  }
 
   deleteNote(e) {
-    var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-      beforeSend: xhr => {
-        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
-      },
-      url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
-      type: 'DELETE',
-      success: response => {
-        thisNote.slideUp();
-        console.log("Congrats, success!");
-        console.log(response);
-
-        if (response.userNoteCount < 5) {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".note-limit-message").removeClass("active");
-        }
-      },
-      error: response => {
-        console.log("Sorry, not a success");
-        console.log(response);
-      }
-    });
+    alert('clicked delete');
   }
 
-  editNote(e) {
-    var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
-
-    if (thisNote.data("state") == 'editable') {
-      this.makeNoteReadOnly(thisNote);
-    } else {
-      this.makeNoteEditable(thisNote);
-    }
+  createNote() {
+    alert('clicked create');
   }
 
-  updateNote(e) {
-    var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
-    var ourUpdatedPostData = {
-      'title': thisNote.find(".note-title-field").val(),
-      'content': thisNote.find(".note-body-field").val()
-    };
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-      beforeSend: xhr => {
-        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
-      },
-      url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
-      type: 'POST',
-      data: ourUpdatedPostData,
-      success: response => {
-        this.makeNoteReadOnly(thisNote);
-        console.log("Congrats, update success!");
-        console.log(response);
-      },
-      error: response => {
-        console.log("Sorry, not a success");
-        console.log(response);
-      }
-    });
-  }
+  editNote() {
+    alert('clicked edit');
+  } // constructor() {
+  //   this.events();
+  // }
+  // events() {
+  //   // $("#my-notes").on("click", ".delete-note", this.deleteNote);
+  //   $("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+  //   $("#my-notes").on("click", "update-note", this.updateNote.bind(this));
+  //   $(".submit-note").on("click", this.createNote.bind(this));
+  // }
+  // Methods
+  // deleteNote(e) {
+  //   var thisNote = $(e.target).parents("li");
+  //   $.ajax({
+  //     beforeSend: (xhr) => {
+  //       xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+  //     },
+  //     url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
+  //     type: 'DELETE',
+  //     success: (response) => {
+  //       thisNote.slideUp();
+  //       console.log("Congrats, success!");
+  //       console.log(response);
+  //       if(response.userNoteCount < 5) {
+  //         $(".note-limit-message").removeClass("active");
+  //       }
+  //     },
+  //     error: (response) => {
+  //       console.log("Sorry, not a success");
+  //       console.log(response);
+  //     }
+  //   });
+  // }
+  // editNote(e) {
+  //   var thisNote = $(e.target).parents("li");
+  //   if (thisNote.data("state") == 'editable') {
+  //     this.makeNoteReadOnly(thisNote);
+  //   } else {
+  //     this.makeNoteEditable(thisNote);
+  //   }
+  // }
+  // updateNote(e) {
+  //   var thisNote = $(e.target).parents("li");
+  //   var ourUpdatedPostData = {
+  //     'title': thisNote.find(".note-title-field").val(),
+  //     'content': thisNote.find(".note-body-field").val(),
+  //   }
+  //   $.ajax({
+  //     beforeSend: (xhr) => {
+  //       xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+  //     },
+  //     url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
+  //     type: 'POST',
+  //     data: ourUpdatedPostData,
+  //     success: (response) => {
+  //       this.makeNoteReadOnly(thisNote);
+  //       console.log("Congrats, update success!");
+  //       console.log(response);
+  //     },
+  //     error: (response) => {
+  //       console.log("Sorry, not a success");
+  //       console.log(response);
+  //     }
+  //   });
+  // }
+  // createNote(e) {
+  //   var thisNote = $(e.target).parents("li");
+  //   var newPostData = {
+  //     'title': $(".new-note-title").val(),
+  //     'content': $(".new-note-body").val(),
+  //     'status': 'publish'
+  //   }
+  //   $.ajax({
+  //     beforeSend: (xhr) => {
+  //       xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+  //     },
+  //     url: universityData.root_url + '/wp-json/wp/v2/note/',
+  //     type: 'POST',
+  //     data: newPostData,
+  //     success: (response) => {
+  //       $(".new-note-title, .new-note-body").val('');
+  //       $(`
+  //         <li data-id="${response.id}">
+  //           <input readonly class="note-title-field" value="${response.title.raw}">
+  //           <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true">Edit</i></span>
+  //           <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true">Delete</i></span>
+  //           <textarea readonly class="note-body-field">${response.content.raw}</textarea>
+  //           <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true">Save</i></span>
+  //         </li>
+  //       `).prependTo("#my-notes").hide().slideDown();
+  //       console.log("Congrats, success!");
+  //       console.log(response);
+  //     },
+  //     error: (response) => {
+  //       if(response.responseText == "You have reached your note limit.") {
+  //         $(".note-limit-message").addClass("active");
+  //       }
+  //       console.log("Sorry, not a success");
+  //       console.log(response);
+  //     }
+  //   });
+  // }
+  // makeNoteEditable(thisNote) {
+  //   thisNote.find(".edit-note").html('<i class="fa fa-times" aria-hidden="true">Cancel</i>');
+  //   thisNote.find(".note-title-field, .note-body-field").removeAttr('readonly').addClass("note-active-field");
+  //   thisNote.find(".update-note").addClass("update-note--visible");
+  //   thisNote.data("state", "editable");
+  // }
+  // makeNoteReadOnly(thisNote) {
+  //   thisNote.find(".edit-note").html('<i class="fa fa-pencil" aria-hidden="true">Edit</i>');
+  //   thisNote.find(".note-title-field, .note-body-field").attr('readonly', 'readonly').removeClass("note-active-field");
+  //   thisNote.find(".update-note").removeClass("update-note--visible");
+  //   thisNote.data("state", "cancel");
+  // }
 
-  createNote(e) {
-    var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).parents("li");
-    var newPostData = {
-      'title': jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title").val(),
-      'content': jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val(),
-      'status': 'publish'
-    };
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-      beforeSend: xhr => {
-        xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
-      },
-      url: universityData.root_url + '/wp-json/wp/v2/note/',
-      type: 'POST',
-      data: newPostData,
-      success: response => {
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title, .new-note-body").val('');
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()(`
-          <li data-id="${response.id}">
-            <input readonly class="note-title-field" value="${response.title.raw}">
-            <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true">Edit</i></span>
-            <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true">Delete</i></span>
-            <textarea readonly class="note-body-field">${response.content.raw}</textarea>
-            <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true">Save</i></span>
-          </li>
-        `).prependTo("#my-notes").hide().slideDown();
-        console.log("Congrats, success!");
-        console.log(response);
-      },
-      error: response => {
-        if (response.responseText == "You have reached your note limit.") {
-          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".note-limit-message").addClass("active");
-        }
-
-        console.log("Sorry, not a success");
-        console.log(response);
-      }
-    });
-  }
-
-  makeNoteEditable(thisNote) {
-    thisNote.find(".edit-note").html('<i class="fa fa-times" aria-hidden="true">Cancel</i>');
-    thisNote.find(".note-title-field, .note-body-field").removeAttr('readonly').addClass("note-active-field");
-    thisNote.find(".update-note").addClass("update-note--visible");
-    thisNote.data("state", "editable");
-  }
-
-  makeNoteReadOnly(thisNote) {
-    thisNote.find(".edit-note").html('<i class="fa fa-pencil" aria-hidden="true">Edit</i>');
-    thisNote.find(".note-title-field, .note-body-field").attr('readonly', 'readonly').removeClass("note-active-field");
-    thisNote.find(".update-note").removeClass("update-note--visible");
-    thisNote.data("state", "cancel");
-  }
 
 }
 
