@@ -7,8 +7,17 @@
 <div class="container container--narrow page-section">
     <div class="generic-content">
       <div class="row group">
-        <div class="one-third"><?php the_post_thumbnail('professor-portrait'); ?></div>
-        <div class="two-thirds"><?php the_content(); ?></div>
+        <div class="one-third">
+            <?php the_post_thumbnail('professor-portrait'); ?>
+        </div>
+        <div class="two-thirds">
+            <span class="like-box">
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <span class="like-count">4</span>
+            </span>
+            <?php the_content(); ?>
+        </div>
       </div>
     </div>
 
