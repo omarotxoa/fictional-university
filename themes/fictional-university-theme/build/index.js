@@ -6025,7 +6025,10 @@ __webpack_require__.r(__webpack_exports__);
 
 class Like {
   constructor() {
-    this.events();
+    if (document.querySelector(".like-box")) {
+      (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-WP-Nonce"]) = universityData.nonce;
+      this.events();
+    }
   }
 
   events() {
