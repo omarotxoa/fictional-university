@@ -41,6 +41,7 @@ class Like {
         let likeCount = parseInt(currentLikeBox.querySelector(".like-count").innerHTML, 10);
         likeCount++;
         currentLikeBox.querySelector(".like-count").innerHTML = likeCount;
+        currentLikeBox.setAttribute('data-like', response.data);
       }
       console.log(response.data);
     } catch(e) {
@@ -50,9 +51,16 @@ class Like {
 
   async deleteLike(currentLikeBox) {
     try {
-      const response = await axios.delete(
-        universityData.root_url + "/wp-json/university/v1/manageLike"
-      );
+      const response = await axios({
+        url: universityData.root_url + "/wp-json/university/v1/manageLike",
+        method: 'delete',
+        data: { "like": currentLikeBox.getAttribute("data-like") },
+      })
+      currentLikeBox.setAttribute("data-exists", "no");
+      let likeCount = parseInt(currentLikeBox.querySelector(".like-count").innerHTML, 10);
+      likeCount--;
+      currentLikeBox.querySelector(".like-count").innerHTML = likeCount;
+      currentLikeBox.setAttribute('data-like', '');
       console.log(response.data);
     } catch(e) {
       console.log(e);
