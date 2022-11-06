@@ -15,7 +15,14 @@ function universityLikeRoutes() {
 }
 
 function createLike() {
-  return 'Thanks for trying to create a like';
+  wp_insert_post(array(
+    'post_type' => 'like',
+    'post_status' => 'publish',
+    'post_title' => 'php like post test',
+    'meta_input' => array(
+      'liked_professor_id' => 12345
+    )
+  ));
 }
 
 function deleteLike() {
