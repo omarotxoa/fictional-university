@@ -28,7 +28,10 @@ class Like {
   async createLike(currentLikeBox) {
     try {
       const response = await axios.post(
-        universityData.root_url + "/wp-json/university/v1/manageLike"
+        universityData.root_url + "/wp-json/university/v1/manageLike",
+        {
+         "professorId": 789
+        }
       );
       console.log(response.data);
     } catch(e) {
