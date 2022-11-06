@@ -6019,6 +6019,10 @@ class HeroSlider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
 class Like {
   constructor() {
     this.events();
@@ -6039,18 +6043,30 @@ class Like {
     }
 
     if (currentLikeBox.getAttribute("data-exists") == "yes") {
-      this.deleteLike();
+      this.deleteLike(currentLikeBox);
     } else {
-      this.createLike();
+      this.createLike(currentLikeBox);
     }
   }
 
-  createLike() {
-    alert('click to add from create like function');
+  async createLike(currentLikeBox) {
+    try {
+      const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(universityData.root_url + "/wp-json/university/v1/manageLike");
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  deleteLike() {
-    alert('clicked to delete from deletelike function');
+  async deleteLike(currentLikeBox) {
+    try {
+      const response = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](universityData.root_url + "/wp-json/university/v1/manageLike");
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+
+    ;
   }
 
 }

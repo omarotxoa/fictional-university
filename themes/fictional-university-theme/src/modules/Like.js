@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 class Like {
   constructor() {
     this.events();
@@ -17,18 +19,32 @@ class Like {
     }
 
     if (currentLikeBox.getAttribute("data-exists") == "yes") {
-      this.deleteLike();
+      this.deleteLike(currentLikeBox);
     } else {
-      this.createLike();
+      this.createLike(currentLikeBox);
     }
   }
 
-  createLike() {
-    alert('click to add from create like function');
+  async createLike(currentLikeBox) {
+    try {
+      const response = await axios.post(
+        universityData.root_url + "/wp-json/university/v1/manageLike"
+      );
+      console.log(response.data);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
-  deleteLike() {
-    alert('clicked to delete from deletelike function');
+  async deleteLike(currentLikeBox) {
+    try {
+      const response = await axios.delete(
+        universityData.root_url + "/wp-json/university/v1/manageLike"
+      );
+      console.log(response.data);
+    } catch(e) {
+      console.log(e);
+    };
   }
 }
 
