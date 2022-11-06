@@ -6057,6 +6057,14 @@ class Like {
       const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(universityData.root_url + "/wp-json/university/v1/manageLike", {
         "professorId": currentLikeBox.getAttribute('data-professor')
       });
+
+      if (typeof response.data == 'number') {
+        currentLikeBox.setAttribute("data-exists", "yes");
+        let likeCount = parseInt(currentLikeBox.querySelector(".like-count").innerHTML, 10);
+        likeCount++;
+        currentLikeBox.querySelector(".like-count").innerHTML = likeCount;
+      }
+
       console.log(response.data);
     } catch (e) {
       console.log(e);
