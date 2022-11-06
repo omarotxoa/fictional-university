@@ -30,7 +30,7 @@ class Like {
       const response = await axios.post(
         universityData.root_url + "/wp-json/university/v1/manageLike",
         {
-         "professorId": 789
+         "professorId": currentLikeBox.getAttribute('data-professor'),
         }
       );
       console.log(response.data);

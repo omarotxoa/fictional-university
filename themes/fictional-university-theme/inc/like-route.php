@@ -19,7 +19,7 @@ function createLike($data) {
   wp_insert_post(array(
     'post_type' => 'like',
     'post_status' => 'publish',
-    'post_title' => 'php like post test 3',
+    'post_title' => 'php like post test 4',
     'meta_input' => array(
       'liked_professor_id' => $professor
     )

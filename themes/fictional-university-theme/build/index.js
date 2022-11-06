@@ -6052,7 +6052,7 @@ class Like {
   async createLike(currentLikeBox) {
     try {
       const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(universityData.root_url + "/wp-json/university/v1/manageLike", {
-        "professorId": 789
+        "professorId": currentLikeBox.getAttribute('data-professor')
       });
       console.log(response.data);
     } catch (e) {
