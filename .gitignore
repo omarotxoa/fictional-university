@@ -1,3 +1,4 @@
-/plugins
+plugins/*
+!plugins/add-line-plugin/
 /uploads
 /themes/fictional-university-theme/node_modules
