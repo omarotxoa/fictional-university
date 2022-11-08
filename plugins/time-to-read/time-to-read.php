@@ -57,6 +57,29 @@ class TimeToReadPlugin {
       'default' => 'Post Statistics'
     ));
     add_settings_field('ttr_headline', 'Headline Text', array($this, 'headlineHTML'), 'time-to-read-settings', 'ttr_first_section');
+
+
+    // Word Count
+    // Default set to 1 here because we need true/false for the checkmark
+    register_setting('timetoreadplugin', 'ttr_wordcount', array(
+      'sanitize_callback' => 'sanitize_text_field', 
+      'default' => '1'
+    ));
+    add_settings_field('ttr_wordcount', 'Word Count', array($this, 'wordcountHTML'), 'time-to-read-settings', 'ttr_first_section');
+
+    // Character Count
+    register_setting('timetoreadplugin', 'ttr_charcount', array(
+      'sanitize_callback' => 'sanitize_text_field', 
+      'default' => '1'
+    ));
+    add_settings_field('ttr_charcount', 'Character Count', array($this, 'charcountHTML'), 'time-to-read-settings', 'ttr_first_section');
+
+    // Read Time 
+    register_setting('timetoreadplugin', 'ttr_readtime', array(
+      'sanitize_callback' => 'sanitize_text_field', 
+      'default' => '1'
+    ));
+    add_settings_field('ttr_readtime', 'Read Time', array($this, 'readtimeHTML'), 'time-to-read-settings', 'ttr_first_section');
   }
   
   function locationHTML() { ?>
@@ -66,6 +89,19 @@ class TimeToReadPlugin {
     </select>
   <?php }
 
+  function wordcountHTML() { ?>
+    <input type="checkbox" name="ttr_wordcount" value="1" <?php checked(get_option('ttr_wordcount'), '1')?>>
+  <?php }
+
+  function charcountHTML() { ?>
+    <input type="checkbox" name="ttr_charcount" value="1" <?php checked(get_option('ttr_charcount'), '1')?>>
+  <?php }
+
+  function readtimeHTML() { ?>
+    <input type="checkbox" name="ttr_readtime" value="1" <?php checked(get_option('ttr_readtime'), '1')?>>
+  <?php }
+
+  // The Value in this input field is prepopulated with the default set above in the register_setting function
   function headlineHTML() { ?>
     <input type="text" name="ttr_headline" value="<?php echo esc_attr(get_option('ttr_headline')); ?>">
   <?php }
