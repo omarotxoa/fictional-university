@@ -5,6 +5,8 @@
   Version: 1.0
   Author: Omar
   Author URI: https://pluginlink.plugin
+  Text Domain: ttrdomain
+  Domain Path: /languages
 */
 ?>
 
@@ -15,6 +17,15 @@ class TimeToReadPlugin {
     add_action('admin_menu', array($this, 'adminPage'));
     add_action('admin_init', array($this, 'settings'));
     add_filter('the_content', array($this, 'ifWrap'));
+    add_action('init', array($this, 'languages'));
+  }
+
+  function languages() {
+    // load_plugin_textdomain(a,b,c)
+    // 1. language text domain
+    // 2. depricated. set to false
+    // 3. path to translation
+    load_plugin_textdomain('ttrdomain', false, dirname(plugin_basename(__FILE__)) . '/languages');
   }
 
   function ifWrap($content) {
@@ -42,7 +53,7 @@ class TimeToReadPlugin {
 
     // If user has Wordcount setting checked, then output post wordcount
     if (get_option('ttr_wordcount', '1')) {
-      $html .= 'This post has ' . $wordCount . ' words.<br>';
+      $html .= __('This post has', 'ttrdomain') . " " . $wordCount . ' ' . __('words', 'ttrdomain') . '.<br>';
     }
 
     if (get_option('ttr_charcount', '1')) {
@@ -72,7 +83,7 @@ class TimeToReadPlugin {
     // 3: User role required to view page. 'manage_options' means only users who can change options can see the page
     // 4: Slug
     // 5: Function to output the HTML content
-    add_options_page('Time To Read Settings', 'Time to Read Plugin', 'manage_options', 'time-to-read-settings', array($this, 'settingsPageHTML'));
+    add_options_page('Time To Read Settings', __('Time to Read Plugin', 'ttrdomain'), 'manage_options', 'time-to-read-settings', array($this, 'settingsPageHTML'));
   }
 
   function settings() {
