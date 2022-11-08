@@ -32,7 +32,7 @@ class TimeToReadPlugin {
 
   // This returns HTML to the front end pages that are either blog posts (is_single) or use the main WP query
   function createHTML($content) {
-    $html = '<h3>' . get_option('ttr_headline', "Post Statistics") . '</h3><p>';
+    $html = '<h3>' . esc_html(get_option('ttr_headline', "Post Statistics")) . '</h3><p>';
 
     // get word count once because both wordcount and read time will need it
     // strip tags makes sure not to count html tags into the word count
@@ -48,6 +48,14 @@ class TimeToReadPlugin {
     if (get_option('ttr_charcount', '1')) {
       $html .= 'This post has ' . strlen(strip_tags($content)) . ' characters.<br>';
     }
+
+
+    // Divides by 225 because it is said the average human reads at a speed of 225 words per minute. Round function rounds the number to an integer
+    if (get_option('ttr_readtime', '1')) {
+      $html .= 'This post will take about ' . round($wordCount/225) . ' minute(s) to read. <br>';
+    }
+
+    $html .= "</p>";
 
     // This if check to decide where the Time TO Read info will be placed, before or after the content, as decided by the user in settings field ttr_location
     if (get_option('ttr_location', '0') == '0') {
