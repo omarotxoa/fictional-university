@@ -27,21 +27,24 @@ class TimeToReadPlugin {
   }
 
   function settings() {
-    // register_setting(1,2,3)
-    // 1. Name of the Group this setting belongs to
-    // 2. Name for this specific setting
-    // 3. An array with a sanitized callback and a default value
-    register_setting('timetoreadplugin', 'ttr_location', array(
-      'sanitize_callback' => 'sanitize_text_field', 
-      'default' => '0'
-    ));
-
     // add_settings_section(1,2,3,4)
     // 1. The name of the section we're creating
     // 2. The Title of the section (null for no title)
     // 3. Extra content after title
     // 4. Page slug for the settings page we want to add this section to
     add_settings_section('ttr_first_section', null, null, 'time-to-read-settings');
+
+
+    // Display Location
+
+    // register_setting(1,2,3)
+    // 1. Name of the Group this setting belongs to
+    // 2. Name for this specific setting
+    // 3. An array with a sanitized callback and a default value
+    register_setting('timetoreadplugin', 'ttr_location', array(
+      'sanitize_callback' => array($this, 'sanitizeLocation'), 
+      'default' => '0'
+    ));
 
     // add_settings_field(1,2,3,4,5);
     // 1. The name of a registered setting we want to tie this to
@@ -51,6 +54,7 @@ class TimeToReadPlugin {
     // 5. The section we want to add this field to
     add_settings_field('ttr_location', 'Display Location', array($this, 'locationHTML'), 'time-to-read-settings', 'ttr_first_section');
 
+    // Headline 
 
     register_setting('timetoreadplugin', 'ttr_headline', array(
       'sanitize_callback' => 'sanitize_text_field', 
@@ -81,6 +85,15 @@ class TimeToReadPlugin {
     ));
     add_settings_field('ttr_readtime', 'Read Time', array($this, 'readtimeHTML'), 'time-to-read-settings', 'ttr_first_section');
   }
+
+  // Custom Sanitize / Error function
+  function sanitizeLocation($input) {
+    if ($input != '0' AND $input != '1') {
+      add_settings_error('ttr_location', 'ttr_location_error', 'Display Location must be either Beginning or End');
+      return get_option('ttr_location');
+    }
+    return $input;
+  }
   
   function locationHTML() { ?>
     <select name="ttr_location">
@@ -100,6 +113,14 @@ class TimeToReadPlugin {
   function readtimeHTML() { ?>
     <input type="checkbox" name="ttr_readtime" value="1" <?php checked(get_option('ttr_readtime'), '1')?>>
   <?php }
+
+  //dry checkbox function
+  // requires to set a sixth argument with an array of our own value containing the checkbox settings name. couldn't get it to work
+  /*
+  function checkboxHTML() { ?>
+    <input type="checkbox" name="<?php echo $args['theName']?> " value="1" <?php checked(get_option($args['theName']), '1'); ?>>
+  <?php }
+  */
 
   // The Value in this input field is prepopulated with the default set above in the register_setting function
   function headlineHTML() { ?>
