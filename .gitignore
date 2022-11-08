@@ -1,4 +1,5 @@
 plugins/*
 !plugins/add-line-plugin/
+!plugins/time-to-read/
 /uploads
 /themes/fictional-university-theme/node_modules
