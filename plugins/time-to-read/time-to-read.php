@@ -53,7 +53,7 @@ class TimeToReadPlugin {
 
     // If user has Wordcount setting checked, then output post wordcount
     if (get_option('ttr_wordcount', '1')) {
-      $html .= __('This post has', 'ttrdomain') . " " . $wordCount . ' ' . __('words', 'ttrdomain') . '.<br>';
+      $html .= esc_html__('This post has', 'ttrdomain') . " " . $wordCount . ' ' . esc_html__('words', 'ttrdomain') . '.<br>';
     }
 
     if (get_option('ttr_charcount', '1')) {
