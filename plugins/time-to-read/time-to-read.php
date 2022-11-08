@@ -14,6 +14,47 @@ class TimeToReadPlugin {
   function __construct() {
     add_action('admin_menu', array($this, 'adminPage'));
     add_action('admin_init', array($this, 'settings'));
+    add_filter('the_content', array($this, 'ifWrap'));
+  }
+
+  function ifWrap($content) {
+    if ((is_main_query() AND is_single()) AND 
+      (
+        get_option('ttr_wordcount', '1') OR 
+        get_option('ttr_charcount', '1') OR 
+        get_option('ttr_readtime', '1')
+      )) {
+        return $this->createHTML($content);
+    } else {
+      return $content;
+    }
+  }
+
+  // This returns HTML to the front end pages that are either blog posts (is_single) or use the main WP query
+  function createHTML($content) {
+    $html = '<h3>' . get_option('ttr_headline', "Post Statistics") . '</h3><p>';
+
+    // get word count once because both wordcount and read time will need it
+    // strip tags makes sure not to count html tags into the word count
+    if (get_option('ttr_wordcount', '1') OR get_option('ttr_readtime', '1')) {
+      $wordCount = str_word_count(strip_tags($content));
+    }
+
+    // If user has Wordcount setting checked, then output post wordcount
+    if (get_option('ttr_wordcount', '1')) {
+      $html .= 'This post has ' . $wordCount . ' words.<br>';
+    }
+
+    if (get_option('ttr_charcount', '1')) {
+      $html .= 'This post has ' . strlen(strip_tags($content)) . ' characters.<br>';
+    }
+
+    // This if check to decide where the Time TO Read info will be placed, before or after the content, as decided by the user in settings field ttr_location
+    if (get_option('ttr_location', '0') == '0') {
+      return $html . $content;
+    } else {
+      return $content . $html;
+    }
   }
 
   function adminPage() {
