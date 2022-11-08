@@ -50,6 +50,13 @@ class TimeToReadPlugin {
     // 4. The page slug for the settings page we're working with
     // 5. The section we want to add this field to
     add_settings_field('ttr_location', 'Display Location', array($this, 'locationHTML'), 'time-to-read-settings', 'ttr_first_section');
+
+
+    register_setting('timetoreadplugin', 'ttr_headline', array(
+      'sanitize_callback' => 'sanitize_text_field', 
+      'default' => 'Post Statistics'
+    ));
+    add_settings_field('ttr_headline', 'Headline Text', array($this, 'headlineHTML'), 'time-to-read-settings', 'ttr_first_section');
   }
   
   function locationHTML() { ?>
@@ -57,6 +64,10 @@ class TimeToReadPlugin {
       <option value="0" <?php selected(get_option('ttr_location'), '0'); ?>>Beginning of post</option>
       <option value="1" <?php selected(get_option('ttr_location'), '1'); ?>>End of post</option>
     </select>
+  <?php }
+
+  function headlineHTML() { ?>
+    <input type="text" name="ttr_headline" value="<?php echo esc_attr(get_option('ttr_headline')); ?>">
   <?php }
 
   function settingsPageHTML() { ?>
