@@ -13,6 +13,7 @@
 class TimeToReadPlugin {
   function __construct() {
     add_action('admin_menu', array($this, 'adminPage'));
+    add_action('admin_init', array($this, 'settings'));
   }
 
   function adminPage() {
@@ -24,9 +25,51 @@ class TimeToReadPlugin {
     // 5: Function to output the HTML content
     add_options_page('Time To Read Settings', 'Time to Read Plugin', 'manage_options', 'time-to-read-settings', array($this, 'settingsPageHTML'));
   }
+
+  function settings() {
+    // register_setting(1,2,3)
+    // 1. Name of the Group this setting belongs to
+    // 2. Name for this specific setting
+    // 3. An array with a sanitized callback and a default value
+    register_setting('timetoreadplugin', 'ttr_location', array(
+      'sanitize_callback' => 'sanitize_text_field', 
+      'default' => '0'
+    ));
+
+    // add_settings_section(1,2,3,4)
+    // 1. The name of the section we're creating
+    // 2. The Title of the section (null for no title)
+    // 3. Extra content after title
+    // 4. Page slug for the settings page we want to add this section to
+    add_settings_section('ttr_first_section', null, null, 'time-to-read-settings');
+
+    // add_settings_field(1,2,3,4,5);
+    // 1. The name of a registered setting we want to tie this to
+    // 2. The HTML Label Text - What users see on the frontend
+    // 3. Outputs html
+    // 4. The page slug for the settings page we're working with
+    // 5. The section we want to add this field to
+    add_settings_field('ttr_location', 'Display Location', array($this, 'locationHTML'), 'time-to-read-settings', 'ttr_first_section');
+  }
   
+  function locationHTML() { ?>
+    <select name="ttr_location">
+      <option value="0">Beginning of post</option>
+      <option value="1">End of post</option>
+    </select>
+  <?php }
+
   function settingsPageHTML() { ?>
-    <h2>Hello</h2>
+    <h1>Time to Read Plugin Settings</h1>
+    <form action="options.php" method="POST">
+      <?php 
+        // handles a lot of the permissions and security
+        settings_fields('timetoreadplugin');
+        // adds the settings sections
+        do_settings_sections('time-to-read-settings');
+        submit_button();
+      ?>
+    </form>
   <?php } 
 } 
 
