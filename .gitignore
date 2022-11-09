@@ -1,5 +1,6 @@
 plugins/*
 !plugins/add-line-plugin/
 !plugins/time-to-read/
+!plugins/word-filter-plugin/
 /uploads
 /themes/fictional-university-theme/node_modules
