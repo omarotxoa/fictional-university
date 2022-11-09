@@ -17,15 +17,17 @@ class WordFilterPlugin {
   }
 
   function wordFilterMenu() {
-    add_menu_page('Words to Filter', 'Word Filter', 'manage_options', 'wordfilter', array($this, 'wordFilterPage'), 'dashicons-smiley', 100);
-    add_submenu_page('wordfilter', 'Word Filter Options', 'Options', 'manage_options', 'word-filter-options', array($this, 'optionsSubPage'));
+    add_menu_page('Words to Filter', 'Word Filter', 'manage_options', 'wordfilter', array($this, 'wfp_settings_page'), 'dashicons-smiley', 100);
+    // This second one is
+    add_submenu_page('wordfilter', 'Words to Filter', 'Words List', 'manage_options', 'wordfilter', array($this, 'wfp_settings_page'));
+    add_submenu_page('wordfilter', 'Word Filter Options', 'Options', 'manage_options', 'word-filter-options', array($this, 'wfp_options_page'));
   }
 
-  function wordFilterPage() { ?>
+  function wfp_settings_page() { ?>
     Hello World
   <?php }
 
-  function optionsSubPage() { ?>
+  function wfp_options_page() { ?>
     Hello World from the options page
   <?php }
 
