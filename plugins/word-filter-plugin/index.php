@@ -28,9 +28,15 @@ class WordFilterPlugin {
   }
 
   function handleForm() {
-    update_option('plugin_words_to_filter', $_POST['plugin_words_to_filter']); ?>
-    <div class="updated">Settings Saved</div>
-  <?php }
+    if (wp_verify_nonce($_POST['ourNonce'], 'saveFilterWords') AND current_user_can('manage_options')) {
+      update_option('plugin_words_to_filter', $_POST['plugin_words_to_filter']); ?>
+      <div class="updated">Settings Saved</div>
+    <?php } else { ?>
+      <div class="error">
+        <p>Sorry, you do not have permission to perform that action.</p>
+      </div>
+    <?php }
+  }
 
   function wfp_settings_page() { ?>
     <div class="wrap">
@@ -38,6 +44,7 @@ class WordFilterPlugin {
       <?php if ($_POST['justsubmitted'] == "true") $this->handleForm() ?>
       <form method="POST">
         <input type="hidden" name="justsubmitted" value="true">
+        <?php wp_nonce_field('saveFilterWords', 'ourNonce'); ?>
         <label for="plugin_words_to_filter"><p>Enter a <strong>comma-separated</strong> list of words to filter from your site's content.</p></label>
         <div class="word-filter__flex-container">
           <textarea name="plugin_words_to_filter" id="plugin_words_to_filter" placeholder="bad, mean, awful, horrible, words"><?php echo esc_textarea(get_option('plugin_words_to_filter')); ?></textarea>
