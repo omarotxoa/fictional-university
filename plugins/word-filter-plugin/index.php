@@ -27,13 +27,20 @@ class WordFilterPlugin {
     wp_enqueue_style('filterAdminCss', plugin_dir_url(__FILE__) . 'styles.css');
   }
 
+  function handleForm() {
+    update_option('plugin_words_to_filter', $_POST['plugin_words_to_filter']); ?>
+    <div class="updated">Settings Saved</div>
+  <?php }
+
   function wfp_settings_page() { ?>
     <div class="wrap">
       <h1>Word Filter Settings</h1>
+      <?php if ($_POST['justsubmitted'] == "true") $this->handleForm() ?>
       <form method="POST">
+        <input type="hidden" name="justsubmitted" value="true">
         <label for="plugin_words_to_filter"><p>Enter a <strong>comma-separated</strong> list of words to filter from your site's content.</p></label>
         <div class="word-filter__flex-container">
-          <textarea name="plugin_words_to_filter" id="plugin_words_to_filter" placeholder="bad, mean, awful, horrible, words"></textarea>
+          <textarea name="plugin_words_to_filter" id="plugin_words_to_filter" placeholder="bad, mean, awful, horrible, words"><?php echo esc_textarea(get_option('plugin_words_to_filter')); ?></textarea>
         </div>
         <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
       </form>
