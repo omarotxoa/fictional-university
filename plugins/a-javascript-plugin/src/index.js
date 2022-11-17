@@ -2,17 +2,28 @@ wp.blocks.registerBlockType("ajp/a-javascript-plugin", {
   title: "A Javascript Plugin",
   icon: "smiley",
   category: "common",
-  edit: function() {
+  attributes: {
+    skyColor: {type: "string"},
+    grassColor: {type: "string"}
+  },
+  edit: function(props) {
+    function updateSkyColor(e) {
+      props.setAttributes({skyColor: e.target.value})
+    }
+    function updateGrassColor(e) {
+      props.setAttributes({grassColor: e.target.value})
+    }
     return (
       <div>
-        <p>Test from our new js block</p>
+        <input type="text" placeholder="sky color" value={props.attributes.skyColor} onChange={updateSkyColor} />
+        <input type="text" placeholder="grass color" value={props.attributes.grassColor} onChange={updateGrassColor}/>
       </div>
     )
   },
-  save: function() {
+  save: function(props) {
     return (
       <>
-        <div>Frontend Test</div>
+        <div>Today the sky is {props.attributes.skyColor} and the grass is {props.attributes.grassColor}</div>
       </>
     )
   }

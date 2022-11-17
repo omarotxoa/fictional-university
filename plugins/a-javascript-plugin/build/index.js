@@ -94,11 +94,39 @@ wp.blocks.registerBlockType("ajp/a-javascript-plugin", {
   title: "A Javascript Plugin",
   icon: "smiley",
   category: "common",
-  edit: function () {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Test from our new js block"));
+  attributes: {
+    skyColor: {
+      type: "string"
+    },
+    grassColor: {
+      type: "string"
+    }
   },
-  save: function () {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Frontend Test"));
+  edit: function (props) {
+    function updateSkyColor(e) {
+      props.setAttributes({
+        skyColor: e.target.value
+      });
+    }
+    function updateGrassColor(e) {
+      props.setAttributes({
+        grassColor: e.target.value
+      });
+    }
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "text",
+      placeholder: "sky color",
+      value: props.attributes.skyColor,
+      onChange: updateSkyColor
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "text",
+      placeholder: "grass color",
+      value: props.attributes.grassColor,
+      onChange: updateGrassColor
+    }));
+  },
+  save: function (props) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Today the sky is ", props.attributes.skyColor, " and the grass is ", props.attributes.grassColor));
   }
 });
 }();
